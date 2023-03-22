@@ -10,7 +10,7 @@ const createUser = async (req, res) => {
     
         const userExists = await User.findOne({ email });
     
-        if (userExists) return res.stats(200).json{userExists};
+        if (userExists) return res.stats(200).json(userExists);
     
         const newUser = await User.create({
             name,
