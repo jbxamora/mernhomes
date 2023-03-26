@@ -1,10 +1,10 @@
-import { useLogin } from "@refinedev/core";
 import { useEffect, useRef } from "react";
-import { CredentialResponse } from "../interfaces/google";
+import { useLogin } from "@refinedev/core";
+import { Container, Box } from "@mui/material";
 
-// Todo: Update your Google Client ID here
-const GOOGLE_CLIENT_ID =
-  "1041339102270-jlljcjl19jo1hkgf695em3ibr7q2m734.apps.googleusercontent.com";
+import { yariga } from '../assets';
+
+import { CredentialResponse } from "../interfaces/google";
 
 export const Login: React.FC = () => {
   const { mutate: login } = useLogin<CredentialResponse>();
@@ -20,7 +20,7 @@ export const Login: React.FC = () => {
       try {
         window.google.accounts.id.initialize({
           ux_mode: "popup",
-          client_id: GOOGLE_CLIENT_ID,
+          client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
           callback: async (res: CredentialResponse) => {
             if (res.credential) {
               login(res);
@@ -35,21 +35,42 @@ export const Login: React.FC = () => {
       } catch (error) {
         console.log(error);
       }
-    }, []);
+    }, []); // you can also add your client id as dependency here
 
     return <div ref={divRef} />;
   };
 
   return (
-    <div
-      style={{
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+    <Box
+      component="div"
+      sx={{ backgroundColor: '#FCFCFC' }}
     >
-      <GoogleButton />
-    </div>
+      <Container
+        component="main"
+        maxWidth="xs"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          height: "100vh",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <div>
+            <img src={yariga} alt="Yariga Logo" />
+          </div>
+          <Box mt={4}>
+            <GoogleButton />
+          </Box>
+        </Box>
+      </Container>
+    </Box>
   );
 };
