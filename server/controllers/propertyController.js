@@ -157,7 +157,7 @@ const deleteProperty = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
- };
+};
 
 export {
     getAllProperties,
@@ -165,5 +165,5 @@ export {
     createProperty,
     updateProperty,
     deleteProperty,
-}
+};
 
